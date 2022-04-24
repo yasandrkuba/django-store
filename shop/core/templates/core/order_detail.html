@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+  Request Refund
+{% endblock %}
+
+{% block content%}
+  <!--Main layout-->
+  <main>
+    <div class="container">
+        <br><br>
+        <div class="shadow p-3 mb-5 bg-body rounded">
+            <p> Current order status:
+            {% if order.received %}
+                            <span style="color: green;">Completed</span>
+                        {% else %}
+                            <span style="color: grey;">In progress</span>
+                        {% endif %}
+            {% for item in order_items %}
+            </p>
+            <hr>
+            <h5><b>{{ item.item.title }}</b> x {{ item.quantity }}</h5>
+            <img height="100" width="100" src="{{ item.item.image.url }}">
+            {% endfor %}
+            <br><br>
+            <h5><b>Total Price:</b> ${{ order.get_total }}</h5>
+            <hr>
+
+            <div class="row">
+                <div class="col-md-6 mb-2">
+                    <p style="color: grey;">Delivery address:</p>
+                    <h5>{{ order.billing_address.street_address}}</h5>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <p style="color: grey;">Receiver name:</p>
+                    <h5>{{ order.billing_address.first_name}} {{ order.billing_address.last_name}}</h5>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-2">
+                    <p style="color: grey;">Receiver email address:</p>
+                    <h5>{{ order.billing_address.email}}</h5>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <p style="color: grey;">Receiver phone number:</p>
+                    <h5>{{ order.billing_address.phone_number }}</h5>
+                </div>
+            </div>
+            <hr>
+            <a href="{{ order.get_order_report_url }}"><p>Report a problem</p></a>
+        </div>
+    </div>
+  </main>
+  <!--Main layout-->
+{% endblock %}

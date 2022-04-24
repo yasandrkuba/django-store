@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+  Search
+{% endblock %}
+
+{% block content%}
+  <!--Main layout-->
+  <main>
+    <div class="container">
+        {% include 'core/include/category_navbar.html' %}
+            <section class="text-center mb-4">
+            <!--Grid row-->
+                <div class="row wow fadeIn">
+                    {% for result in all_search_results %}
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card">
+                            <!--Card image-->
+                            <div class="view overlay">
+                                <img height="243" width="210" src="{{ result.image.url }}" class="card-img-top">
+                                <a href="{{ result.get_absolute_url }}">
+                                    <div class="mask rgba-white-slight"></div>
+                                </a>
+                            </div>
+                            <!--Card image-->
+
+                            <!--Card content-->
+                            <div class="card-body text-center">
+                                <!--Category & Title-->
+                                <a href="{{ result.get_absolute_url }}" class="grey-text">
+                                    <h5>{{ result.category }}</h5>
+                                </a>
+                                <h5>
+                                    <strong><a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ result.title }}
+                                    </a>
+                                    </strong>
+                                </h5>
+
+                                <h4 class="font-weight-bold blue-text">
+                                    <strong>{% if result.discount_price %}<span class="mr-1"><del style="font-size:22px; opacity:0.7;">${{ result.price }}</del>
+                                    </span>
+                                        {{ result.discount_price }}$ {% else %}
+                                        {{ result.price }}$ {% endif %}
+                                    </strong>
+                                </h4>
+
+                            </div>
+                            <!--Card content-->
+                        </div>
+                        </div>
+                        {% endfor %}
+
+                </div>
+            </section>
+
+            <!--Card-->
+
+            </div>
+        </div>
+  </main>
+  <!--Main layout-->
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+  Order List
+{% endblock %}
+
+{% block content%}
+  <!--Main layout-->
+  <main>
+    <div class="container">
+        <div class="d-inline-flex p-2 col-9">
+            <div class="table-responsive text-nowrap">
+                <h2>Order List</h2>
+                {% for order in orders_list %}
+                    {% if order.ordered %}
+                    <a href="{{ order.get_absolute_url }}">
+                        <div class="alert alert-secondary">
+                            <p>
+                                <b>№ {{ order.ref_code }} </b>
+                                <span class="float-right">{{ order.ordered_date}}</span>
+                            </p>
+                            {% if order.received %}
+                                <p style="color: green;">Completed</p>
+                            {% else %}
+                                <p style="color: grey;">In progress</p>
+                            {% endif %}
+                            <p>Total Price: <b class="float-right">${{ order.get_total }}</b></p>
+                        </div>
+                    </a>
+                    {% endif %}
+                    {% empty %}
+                        <br>
+                        <h5>No results found...</h5>
+                        <hr>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+  </main>
+  <!--Main layout-->
+{% endblock %}
